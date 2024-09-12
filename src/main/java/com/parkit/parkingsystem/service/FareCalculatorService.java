@@ -4,6 +4,8 @@ import com.parkit.parkingsystem.constants.Fare;
 import com.parkit.parkingsystem.constants.ParkingType;
 import com.parkit.parkingsystem.model.Ticket;
 
+
+ // convertir 'milisecondes'
 public class FareCalculatorService {
 
     public void calculateFare(Ticket ticket) {
@@ -13,51 +15,49 @@ public class FareCalculatorService {
 
         long inTime = ticket.getInTime().getTime();
         long outTime = ticket.getOutTime().getTime();
+        System.out.println("intime" + inTime);
+        System.out.println("out" + outTime);
+
         long duration = ticket.getOutTime().getTime() - ticket.getInTime().getTime();
-        double fare = calculateFareBasedOnType(ticket.getParkingType(), duration);
+        System.out.println("duration" + duration);
+        System.out.println("duration" + duration / (1000 * 60 * 60));
+        double durationInHours = (double) duration / (1000 * 60 * 60);
+        System.out.println("durationInHours" + durationInHours);
+        // long durationInMilliseconds = duration.toMillis();
+        // System.out.println("durationInMilliseconds" + durationInMilliseconds);
+
+        double fare = calculateFareBasedOnType(ticket.getParkingSpot().getParkingType(), duration);
         ticket.setPrice(fare);
-
-        double durationInHours = (double) duration / (60 * 60 * 1000);
-
-        double fare = 0;
-
+        // double durationInHours = (double) duration / (60 * 60 * 1000);
+    }
     private double calculateFareBasedOnType(ParkingType parkingType, long duration) {
         double farePerHour = parkingType == ParkingType.CAR ? Fare.CAR_RATE_PER_HOUR : Fare.BIKE_RATE_PER_HOUR;
         double hours = (double) duration / (1000 * 60 * 60);
         double fare = hours * farePerHour;
+        System.out.println("test" + farePerHour);
+        System.out.println("test" + hours);
 
-        double dailyMaxFare = parkingType == ParkingType.CAR ? Fare.CAR_DAILY_MAX : Fare.BIKE_DAILY_MAX;
-    if (fare > dailyMaxFare) {
-        fare = dailyMaxFare;
-    }
-    return Math.round(fare * 100.0) / 100.0;
-}
+    //     double dailyMaxFare = parkingType == ParkingType.CAR ? Fare.CAR_DAILY_MAX : Fare.BIKE_DAILY_MAX;
+    // if (fare > dailyMaxFare) {
+    //     fare = dailyMaxFare;
+    // }
 
-        if (ticket.getParkingSpot().getParkingType() == ParkingType.CAR) {
-            fare = durationInHours * Fare.CAR_RATE_PER_HOUR;
-        } else if (ticket.getParkingSpot().getParkingType() == ParkingType.BIKE) {
-            fare = durationInHours * Fare.BIKE_RATE_PER_HOUR;
-        } else {
-            throw new NullPointerException("Parking type is not defined");
-        }
+        // if (ticket.getParkingSpot().getParkingType() == ParkingType.CAR) {
+        //     fare = durationInHours * Fare.CAR_RATE_PER_HOUR;
+        // } else if (ticket.getParkingSpot().getParkingType() == ParkingType.BIKE) {
+        //     fare = durationInHours * Fare.BIKE_RATE_PER_HOUR;
+        // } else {
+        //     throw new NullPointerException("Parking type is not defined");
+        // }
+        return Math.round(fare * 1.000) / 1.000;
+      }  
 
-        if (durationInHours < 1) {
-            fare = fare * 0.75;
-        }
+        // // Appliquer une réduction de 25% si la durée est inférieure à 1 heure
+        // if (hours < 1) {
+        //     fare *= 0.75;
+        // }
 
-        ticket.setPrice(fare);
-
-        switch (ticket.getParkingSpot().getParkingType()){
-            case CAR: {
-                ticket.setPrice(duration * Fare.CAR_RATE_PER_HOUR);
-                break;
-            }
-            case BIKE: {
-                ticket.setPrice(duration * Fare.BIKE_RATE_PER_HOUR);
-                break;
-            }
-            default: throw new IllegalArgumentException("Unkown Parking Type");
-        }
-    }
 
     }
+
+     
