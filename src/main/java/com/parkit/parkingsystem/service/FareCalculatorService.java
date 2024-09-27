@@ -52,7 +52,7 @@ public class FareCalculatorService {
         System.out.println("test" + farePerHour);
         System.out.println("test" + hours);
 
-        return Math.round(fare * 1.000) / 1.000;
+        return fare;
       }  
 
         // // Appliquer une réduction de 25% si la durée est inférieure à 1 heure

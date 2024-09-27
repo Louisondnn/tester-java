@@ -25,12 +25,6 @@ public class ParkingFareCalculatorTest {
         assertEquals(7.5, fare); 
     }
 
-    // @Test
-    // public void calculateFareBikeWithLessThan30minutesParkingTime() {
-    //     // Arrange
-    //     ParkingFareCalculator calculator = new ParkingFareCalculator();
-    //     Ticket ticket = new Ticket(VehicleType.MOTO, 15); // 15 minutes de stationnement
-    //     double fare = calculator.calculateFare(ticket);
-    //     assertEquals(0, fare, 0.01); 
-    // }
+    // remettre un arrondi 2 virgules 
+    
 }
