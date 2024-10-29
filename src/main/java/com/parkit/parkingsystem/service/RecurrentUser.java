@@ -2,11 +2,11 @@ package com.parkit.parkingsystem.service;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ParkingSystem {
+public class RecurrentUser {
     private Map<String, Boolean> recurrentUsers;
     private double normalTariff;
 
-    public ParkingSystem(double normalTariff) {
+    public RecurrentUser(double normalTariff) {
         this.recurrentUsers = new HashMap<>();
         this.normalTariff = normalTariff;
     }
@@ -21,10 +21,22 @@ public class ParkingSystem {
     }
 
     public double calculateTariff(String licensePlate) {
-        if (recurrentUsers.get(licensePlate)) {
-            return normalTariff * 0.95; // 5% discount
+        if (recurrentUsers.containsKey(licensePlate)) {
+            if (recurrentUsers.get(licensePlate)) {
+                return normalTariff * 0.95; // 5% remise
+            } else {
+                return normalTariff;
+            }
         } else {
             return normalTariff;
         }
+    }
+    public void exitGarage(String licensePlate) {
+        if (recurrentUsers.get(licensePlate)) {
+            System.out.println("Merci pour votre visite ! Vous avez obtenu une remise de 5% sur votre tarif.");
+        } else {
+            System.out.println("Merci pour votre visite !");
+        }
+        recurrentUsers.remove(licensePlate);
     }
 }
