@@ -11,6 +11,10 @@ public class Ticket {
     private Date inTime;
     private Date outTime;
 
+    public Ticket(String string, ParkingSpot parkingSpot2) {
+        //TODO Auto-generated constructor stub
+    }
+
     public int getId() {
         return id;
     }

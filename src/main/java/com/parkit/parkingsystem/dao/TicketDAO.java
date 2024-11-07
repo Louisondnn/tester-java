@@ -86,4 +86,9 @@ public class TicketDAO {
         }
         return false;
     }
+
+    public void deleteTicket(String string) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'deleteTicket'");
+    }
 }

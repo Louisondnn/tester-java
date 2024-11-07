@@ -7,10 +7,8 @@
 /Users/louisondonne/tester-java/src/main/java/com/parkit/parkingsystem/dao/TicketDAO.java
 /Users/louisondonne/tester-java/src/main/java/com/parkit/parkingsystem/model/ParkingSpot.java
 /Users/louisondonne/tester-java/src/main/java/com/parkit/parkingsystem/model/Ticket.java
-/Users/louisondonne/tester-java/src/main/java/com/parkit/parkingsystem/service/ExtendWith.java
 /Users/louisondonne/tester-java/src/main/java/com/parkit/parkingsystem/service/FareCalculatorService.java
 /Users/louisondonne/tester-java/src/main/java/com/parkit/parkingsystem/service/InteractiveShell.java
-/Users/louisondonne/tester-java/src/main/java/com/parkit/parkingsystem/service/MockitoExtension.java
 /Users/louisondonne/tester-java/src/main/java/com/parkit/parkingsystem/service/ParkingService.java
 /Users/louisondonne/tester-java/src/main/java/com/parkit/parkingsystem/service/RecurrentUser.java
 /Users/louisondonne/tester-java/src/main/java/com/parkit/parkingsystem/util/InputReaderUtil.java

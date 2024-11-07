@@ -56,4 +56,9 @@ public class ParkingSpotDAO {
         }
     }
 
+    public void freeParkingSpot(int i) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'freeParkingSpot'");
+    }
+
 }

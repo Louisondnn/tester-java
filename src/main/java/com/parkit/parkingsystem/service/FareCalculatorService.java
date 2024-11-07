@@ -52,3 +52,5 @@ public class FareCalculatorService {
     // tests fonctionnels 
 
      
+
+     

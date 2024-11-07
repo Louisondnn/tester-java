@@ -27,7 +27,7 @@ public class ParkingService {
         this.ticketDAO = ticketDAO;
     }
 
-    public void processIncomingVehicle() {
+    public Ticket processIncomingVehicle() {
         try{
             ParkingSpot parkingSpot = getNextParkingNumberIfAvailable();
             if(parkingSpot !=null && parkingSpot.getId() > 0){
@@ -117,6 +117,11 @@ public class ParkingService {
         }catch(Exception e){
             logger.error("Unable to process exiting vehicle",e);
         }
+    }
+
+    public int getAvailableParking() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getAvailableParking'");
     }
 
 

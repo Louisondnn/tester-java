@@ -4,8 +4,6 @@ com/parkit/parkingsystem/model/ParkingSpot.class
 com/parkit/parkingsystem/config/DataBaseConfig.class
 com/parkit/parkingsystem/service/FareCalculatorService.class
 com/parkit/parkingsystem/service/InteractiveShell.class
-com/parkit/parkingsystem/service/MockitoExtension.class
-com/parkit/parkingsystem/service/ExtendWith.class
 com/parkit/parkingsystem/service/RecurrentUser.class
 com/parkit/parkingsystem/service/ParkingService.class
 com/parkit/parkingsystem/util/InputReaderUtil.class
