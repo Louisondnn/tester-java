@@ -8,8 +8,8 @@ import com.parkit.parkingsystem.model.Ticket;
 <span class="fc" id="L8">public class FareCalculatorService {</span>
 
     public double calculateFare(Ticket ticket) {
-<span class="fc bfc" id="L11" title="All 2 branches covered.">        if (ticket.getInTime().getTime() &gt; ticket.getOutTime().getTime()) {</span>
-<span class="fc" id="L12">            throw new IllegalArgumentException(&quot;In time cannot be greater than out time&quot;);</span>
+<span class="pc bpc" id="L11" title="1 of 2 branches missed.">        if (ticket.getInTime().getTime() &gt; ticket.getOutTime().getTime()) {</span>
+<span class="nc" id="L12">            throw new IllegalArgumentException(&quot;In time cannot be greater than out time&quot;);</span>
         }
 
 <span class="fc" id="L15">        long inTime = ticket.getInTime().getTime();</span>
@@ -26,25 +26,25 @@ import com.parkit.parkingsystem.model.Ticket;
 
 <span class="fc bfc" id="L27" title="All 2 branches covered.">    if (duration &lt; 30 * 60 * 1000) { // 30 minutes in milliseconds</span>
 <span class="fc" id="L28">        fare = 0;</span>
-<span class="fc bfc" id="L29" title="All 2 branches covered.">    } else if (ticket.getParkingSpot().getParkingType() == ParkingType.CAR) {</span>
+<span class="pc bpc" id="L29" title="1 of 2 branches missed.">    } else if (ticket.getParkingSpot().getParkingType() == ParkingType.CAR) {</span>
 <span class="fc" id="L30">        fare = duration * Fare.CAR_RATE;</span>
-<span class="pc bpc" id="L31" title="1 of 2 branches missed.">    } else if (ticket.getParkingSpot().getParkingType() == ParkingType.BIKE) {</span>
-<span class="fc" id="L32">        fare = duration * Fare.BIKE_RATE;</span>
+<span class="pc bnc" id="L31" title="All 2 branches missed.">    } else if (ticket.getParkingSpot().getParkingType() == ParkingType.BIKE) {</span>
+<span class="nc" id="L32">        fare = duration * Fare.BIKE_RATE;</span>
     }
 <span class="fc" id="L34">    ticket.setPrice(fare);</span>
 <span class="fc" id="L35">    System.out.println(&quot;Fare: &quot; + fare);</span>
 <span class="fc" id="L36">    return fare;</span>
 
     }
-    public double calculateFareBasedOnType(ParkingType parkingType, long duration) {
-<span class="nc bnc" id="L40" title="All 2 branches missed.">        double farePerHour = parkingType == ParkingType.CAR ? Fare.CAR_RATE_PER_HOUR : Fare.BIKE_RATE_PER_HOUR;</span>
-<span class="nc" id="L41">        double hours = (double) duration / (1000 * 60 * 60);</span>
-<span class="nc" id="L42">        double fare = hours * farePerHour;</span>
-<span class="nc" id="L43">        System.out.println(&quot;test&quot; + farePerHour);</span>
-<span class="nc" id="L44">        System.out.println(&quot;test&quot; + hours);</span>
+    // public double calculateFareBasedOnType(ParkingType parkingType, long duration) {
+    //     double farePerHour = parkingType == ParkingType.CAR ? Fare.CAR_RATE_PER_HOUR : Fare.BIKE_RATE_PER_HOUR;
+    //     double hours = (double) duration / (1000 * 60 * 60);
+    //     double fare = hours * farePerHour;
+    //     System.out.println(&quot;test&quot; + farePerHour);
+    //     System.out.println(&quot;test&quot; + hours);
 
-<span class="nc" id="L46">        return fare;</span>
-      }  
+    //     return fare;
+    //   }  
 
 
     }

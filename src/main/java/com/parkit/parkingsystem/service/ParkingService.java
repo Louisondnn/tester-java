@@ -27,7 +27,11 @@ public class ParkingService {
         this.ticketDAO = ticketDAO;
     }
 
-    public Ticket processIncomingVehicle() {
+  
+
+	public void processIncomingVehicle() {
+        // Ticket ticket = new Ticket(getVehichleRegNumber(), getNextParkingNumberIfAvailable());
+        // Initialize ticket variable
         try{
             ParkingSpot parkingSpot = getNextParkingNumberIfAvailable();
             if(parkingSpot !=null && parkingSpot.getId() > 0){
@@ -36,7 +40,7 @@ public class ParkingService {
                 parkingSpotDAO.updateParking(parkingSpot);//allot this parking space and mark it's availability as false
 
                 Date inTime = new Date();
-                Ticket ticket = new Ticket();
+                Ticket ticket = new Ticket(vehicleRegNumber, parkingSpot);
                 //ID, PARKING_NUMBER, VEHICLE_REG_NUMBER, PRICE, IN_TIME, OUT_TIME)
                 //ticket.setId(ticketID);
                 ticket.setParkingSpot(parkingSpot);
@@ -45,13 +49,19 @@ public class ParkingService {
                 ticket.setInTime(inTime);
                 ticket.setOutTime(null);
                 ticketDAO.saveTicket(ticket);
+
                 System.out.println("Generated Ticket and saved in DB");
                 System.out.println("Please park your vehicle in spot number:"+parkingSpot.getId());
                 System.out.println("Recorded in-time for vehicle number:"+vehicleRegNumber+" is:"+inTime);
+                // return ticket;    
+            }    else {
+            System.out.println("No available parking spots.");
+              
             }
         }catch(Exception e){
             logger.error("Unable to process incoming vehicle",e);
         }
+        
     }
 
     private String getVehichleRegNumber() throws Exception {
@@ -66,7 +76,7 @@ public class ParkingService {
             ParkingType parkingType = getVehichleType();
             parkingNumber = parkingSpotDAO.getNextAvailableSlot(parkingType);
             if(parkingNumber > 0){
-                parkingSpot = new ParkingSpot(parkingNumber,parkingType, true);
+                parkingSpot = new ParkingSpot(parkingNumber,parkingType);
             }else{
                 throw new Exception("Error fetching parking number from DB. Parking slots might be full");
             }

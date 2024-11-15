@@ -10,6 +10,7 @@ import org.apache.logging.log4j.Logger;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.function.BooleanSupplier;
 
 public class ParkingSpotDAO {
     private static final Logger logger = LogManager.getLogger("ParkingSpotDAO");
@@ -59,6 +60,16 @@ public class ParkingSpotDAO {
     public void freeParkingSpot(int i) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'freeParkingSpot'");
+    }
+
+    public Object getAvailableSpot() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getAvailableSpot'");
+    }
+
+    public BooleanSupplier isSpotAvailable(int id) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'isSpotAvailable'");
     }
 
 }

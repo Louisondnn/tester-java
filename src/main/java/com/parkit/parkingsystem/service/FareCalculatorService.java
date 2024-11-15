@@ -36,15 +36,15 @@ public class FareCalculatorService {
     return fare;
 
     }
-    public double calculateFareBasedOnType(ParkingType parkingType, long duration) {
-        double farePerHour = parkingType == ParkingType.CAR ? Fare.CAR_RATE_PER_HOUR : Fare.BIKE_RATE_PER_HOUR;
-        double hours = (double) duration / (1000 * 60 * 60);
-        double fare = hours * farePerHour;
-        System.out.println("test" + farePerHour);
-        System.out.println("test" + hours);
+    // public double calculateFareBasedOnType(ParkingType parkingType, long duration) {
+    //     double farePerHour = parkingType == ParkingType.CAR ? Fare.CAR_RATE_PER_HOUR : Fare.BIKE_RATE_PER_HOUR;
+    //     double hours = (double) duration / (1000 * 60 * 60);
+    //     double fare = hours * farePerHour;
+    //     System.out.println("test" + farePerHour);
+    //     System.out.println("test" + hours);
 
-        return fare;
-      }  
+    //     return fare;
+    //   }  
 
 
     }

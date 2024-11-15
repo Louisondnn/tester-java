@@ -15,7 +15,7 @@ public class RecurrentUser {
 <span class="fc bfc" id="L15" title="All 2 branches covered.">        if (recurrentUsers.containsKey(licensePlate)) {</span>
 <span class="fc" id="L16">            System.out.println(&quot;Heureux de vous revoir ! En tant qu'utilisateur régulier de notre parking, vous allez obtenir une remise de 5%&quot;);</span>
 <span class="fc" id="L17">            recurrentUsers.put(licensePlate, true);</span>
-        } else {
+<span class="fc" id="L18">        } else {</span>
 <span class="fc" id="L19">            recurrentUsers.put(licensePlate, false);</span>
         }
 <span class="fc" id="L21">    }</span>
@@ -34,7 +34,7 @@ public class RecurrentUser {
     public void exitGarage(String licensePlate) {
 <span class="pc bpc" id="L35" title="1 of 2 branches missed.">        if (recurrentUsers.get(licensePlate)) {</span>
 <span class="fc" id="L36">            System.out.println(&quot;Merci pour votre visite ! Vous avez obtenu une remise de 5% sur votre tarif.&quot;);</span>
-        } else {
+<span class="fc" id="L37">        } else {</span>
 <span class="nc" id="L38">            System.out.println(&quot;Merci pour votre visite !&quot;);</span>
         }
 <span class="fc" id="L40">        recurrentUsers.remove(licensePlate);</span>

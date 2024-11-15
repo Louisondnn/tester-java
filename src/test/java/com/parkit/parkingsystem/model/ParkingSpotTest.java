@@ -11,14 +11,14 @@ class ParkingSpotTest {
 
     @BeforeEach
     void setUp() {
-        parkingSpot = new ParkingSpot(1, ParkingType.CAR, true);
+        parkingSpot = new ParkingSpot(1, ParkingType.CAR);
     }
 
     @Test
     void testInitialization() {
         assertEquals(1, parkingSpot.getId());
         assertEquals(ParkingType.CAR, parkingSpot.getParkingType());
-        assertTrue(parkingSpot.isAvailable());
+        assertFalse(parkingSpot.isAvailable());
     }
 
     @Test
@@ -41,8 +41,8 @@ class ParkingSpotTest {
 
     @Test
     void testEqualsAndHashCode() {
-        ParkingSpot anotherSpot = new ParkingSpot(1, ParkingType.CAR, true);
-        ParkingSpot differentSpot = new ParkingSpot(2, ParkingType.BIKE, true);
+        ParkingSpot anotherSpot = new ParkingSpot(1, ParkingType.CAR);
+        ParkingSpot differentSpot = new ParkingSpot(2, ParkingType.BIKE);
 
         assertEquals(parkingSpot, anotherSpot);
         assertNotEquals(parkingSpot, differentSpot);
