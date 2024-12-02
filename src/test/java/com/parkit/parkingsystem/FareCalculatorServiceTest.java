@@ -8,7 +8,8 @@ import com.parkit.parkingsystem.service.FareCalculatorService;
 
 import org.junit.jupiter.api.Test;
 
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -22,8 +23,14 @@ class FareCalculatorServiceTest {
         Ticket ticket = new Ticket(null, null);
         ParkingSpot spot = new ParkingSpot(0, ParkingType.CAR);
         ticket.setParkingSpot(spot);
-        ticket.setInTime(new Date(System.currentTimeMillis()));
-        ticket.setOutTime(new Date(System.currentTimeMillis() + 15 * 60 * 1000)); // 15 minutes later
+        // ticket.setInTime(new Date(System.currentTimeMillis()));
+        // ticket.setOutTime(new Date(System.currentTimeMillis() + 15 * 60 * 1000)); // 15 minutes later
+LocalDateTime inTime = LocalDateTime.now(); 
+    ticket.setInTime(inTime); // Use LocalDateTime
+    
+    // Set outTime to 15 minutes later
+    LocalDateTime outTime = inTime.plus(15, ChronoUnit.MINUTES); // Add 15 minutes
+    ticket.setOutTime(outTime); // Use LocalDateTime
 
 
         double fare = fareCalculatorService.calculateFare(ticket);
@@ -38,9 +45,12 @@ class FareCalculatorServiceTest {
         Ticket ticket = new Ticket(null, null);
         ParkingSpot spot = new ParkingSpot(0, ParkingType.CAR);
         ticket.setParkingSpot(spot);
-        ticket.setInTime(new Date(System.currentTimeMillis()));
-        ticket.setOutTime(new Date(System.currentTimeMillis() + 2 * 60 * 60 * 1000)); // 2 hours later
-
+        LocalDateTime inTime = LocalDateTime.now(); 
+        ticket.setInTime(inTime); // Use LocalDateTime
+        
+        LocalDateTime outTime = inTime.plus(2, ChronoUnit.HOURS); // Add 2 hours
+        ticket.setOutTime(outTime); // Use LocalDateTime
+    
 
         double fare = fareCalculatorService.calculateFare(ticket);
 

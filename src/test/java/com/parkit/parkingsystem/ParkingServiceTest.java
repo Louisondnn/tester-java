@@ -13,9 +13,14 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import java.time.LocalDateTime; // Import LocalDateTime
+import java.time.temporal.ChronoUnit; // Import ChronoUnit if needed
+
 
 import java.util.Date;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -37,7 +42,8 @@ public class ParkingServiceTest {
 
             ParkingSpot parkingSpot = new ParkingSpot(1, ParkingType.CAR);
             Ticket ticket = new Ticket(null, parkingSpot);
-            ticket.setInTime(new Date(System.currentTimeMillis() - (60*60*1000)));
+            LocalDateTime inTime = LocalDateTime.now().minusHours(1);
+            ticket.setInTime(inTime);
             ticket.setParkingSpot(parkingSpot);
             ticket.setVehicleRegNumber("ABCDEF");
             when(ticketDAO.getTicket(anyString())).thenReturn(ticket);

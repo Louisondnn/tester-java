@@ -23,33 +23,21 @@ import com.parkit.parkingsystem.model.Ticket;
 
 <span class="fc" id="L24">        double fare = 0;</span>
 
-
-<span class="fc bfc" id="L27" title="All 2 branches covered.">    if (duration &lt; 30 * 60 * 1000) { // 30 minutes in milliseconds</span>
-<span class="fc" id="L28">        fare = 0;</span>
-<span class="pc bpc" id="L29" title="1 of 2 branches missed.">    } else if (ticket.getParkingSpot().getParkingType() == ParkingType.CAR) {</span>
-<span class="fc" id="L30">        fare = duration * Fare.CAR_RATE;</span>
-<span class="pc bnc" id="L31" title="All 2 branches missed.">    } else if (ticket.getParkingSpot().getParkingType() == ParkingType.BIKE) {</span>
-<span class="nc" id="L32">        fare = duration * Fare.BIKE_RATE;</span>
+<span class="fc bfc" id="L26" title="All 2 branches covered.">    if (duration &lt; 30 * 60 * 1000) { // 30 minutes in milliseconds</span>
+<span class="fc" id="L27">        fare = 0;</span>
+<span class="pc bpc" id="L28" title="1 of 2 branches missed.">    } else if (ticket.getParkingSpot().getParkingType() == ParkingType.CAR) {</span>
+<span class="fc" id="L29">        fare = duration * Fare.CAR_RATE;</span>
+<span class="nc bnc" id="L30" title="All 2 branches missed.">    } else if (ticket.getParkingSpot().getParkingType() == ParkingType.BIKE) {</span>
+<span class="nc" id="L31">        fare = duration * Fare.BIKE_RATE;</span>
     }
-<span class="fc" id="L34">    ticket.setPrice(fare);</span>
-<span class="fc" id="L35">    System.out.println(&quot;Fare: &quot; + fare);</span>
-<span class="fc" id="L36">    return fare;</span>
-
-    }
-    // public double calculateFareBasedOnType(ParkingType parkingType, long duration) {
-    //     double farePerHour = parkingType == ParkingType.CAR ? Fare.CAR_RATE_PER_HOUR : Fare.BIKE_RATE_PER_HOUR;
-    //     double hours = (double) duration / (1000 * 60 * 60);
-    //     double fare = hours * farePerHour;
-    //     System.out.println(&quot;test&quot; + farePerHour);
-    //     System.out.println(&quot;test&quot; + hours);
-
-    //     return fare;
-    //   }  
-
+<span class="fc" id="L33">    ticket.setPrice(fare);</span>
+<span class="fc" id="L34">    System.out.println(&quot;Fare: &quot; + fare);</span>
+<span class="fc" id="L35">    return fare;</span>
 
     }
 
-    // tests fonctionnels 
+    }
+
 
      
 
