@@ -6,48 +6,59 @@ public class ParkingSpot {
     private int number;
     private ParkingType parkingType;
     private boolean isAvailable;
+    private boolean occupied;
 
-<span class="fc" id="L10">    public ParkingSpot(int number, ParkingType parkingType) {</span>
-<span class="fc" id="L11">        this.number = number;</span>
-<span class="fc" id="L12">        this.parkingType = parkingType;</span>
-<span class="fc" id="L13">        this.isAvailable = isAvailable;</span>
-<span class="fc" id="L14">    }</span>
+
+<span class="fc" id="L12">    public ParkingSpot(int number, ParkingType parkingType) {</span>
+<span class="fc" id="L13">        this.number = number;</span>
+<span class="fc" id="L14">        this.parkingType = parkingType;</span>
+<span class="fc" id="L15">        this.occupied = false; // Newly initialized spots should not be occupied</span>
+<span class="fc" id="L16">    }</span>
+    public boolean isOccupied() {
+<span class="fc" id="L18">        return occupied;</span>
+    }
+    // public boolean isAvailable() {
+    //     return isAvailable;
+    // }
+    // public void setAvailable(boolean isAvailable) {
+    //     this.isAvailable = isAvailable;
+    // }
 
     public int getId() {
-<span class="fc" id="L17">        return number;</span>
+<span class="fc" id="L28">        return number;</span>
     }
 
     public void setId(int number) {
-<span class="fc" id="L21">        this.number = number;</span>
-<span class="fc" id="L22">    }</span>
+<span class="fc" id="L32">        this.number = number;</span>
+<span class="fc" id="L33">    }</span>
 
     public ParkingType getParkingType() {
-<span class="fc" id="L25">        return parkingType;</span>
+<span class="fc" id="L36">        return parkingType;</span>
     }
 
     public void setParkingType(ParkingType parkingType) {
-<span class="fc" id="L29">        this.parkingType = parkingType;</span>
-<span class="fc" id="L30">    }</span>
+<span class="fc" id="L40">        this.parkingType = parkingType;</span>
+<span class="fc" id="L41">    }</span>
 
     public boolean isAvailable() {
-<span class="fc" id="L33">        return isAvailable;</span>
+<span class="fc" id="L44">        return isAvailable;</span>
     }
 
     public void setAvailable(boolean available) {
-<span class="fc" id="L37">        isAvailable = available;</span>
-<span class="fc" id="L38">    }</span>
+<span class="fc" id="L48">        isAvailable = available;</span>
+<span class="fc" id="L49">    }</span>
 
     @Override
     public boolean equals(Object o) {
-<span class="pc bpc" id="L42" title="1 of 2 branches missed.">        if (this == o) return true;</span>
-<span class="pc bpc" id="L43" title="2 of 4 branches missed.">        if (o == null || getClass() != o.getClass()) return false;</span>
-<span class="fc" id="L44">        ParkingSpot that = (ParkingSpot) o;</span>
-<span class="fc bfc" id="L45" title="All 2 branches covered.">        return number == that.number;</span>
+<span class="pc bpc" id="L53" title="1 of 2 branches missed.">        if (this == o) return true;</span>
+<span class="pc bpc" id="L54" title="2 of 4 branches missed.">        if (o == null || getClass() != o.getClass()) return false;</span>
+<span class="fc" id="L55">        ParkingSpot that = (ParkingSpot) o;</span>
+<span class="fc bfc" id="L56" title="All 2 branches covered.">        return number == that.number;</span>
     }
 
     @Override
     public int hashCode() {
-<span class="fc" id="L50">        return number;</span>
+<span class="fc" id="L61">        return number;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

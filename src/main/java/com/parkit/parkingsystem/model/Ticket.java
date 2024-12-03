@@ -2,11 +2,15 @@ package com.parkit.parkingsystem.model;
 
 import java.util.Calendar;
 import java.util.Date;
+
+import com.parkit.parkingsystem.constants.ParkingType;
+
 import java.time.LocalDateTime;
 
 
 public class Ticket {
     private int id;
+    private ParkingType parkingType;
     private ParkingSpot parkingSpot;
     private String vehicleRegNumber;
     private double price;
@@ -16,8 +20,12 @@ public class Ticket {
     public Ticket(String vehicleRegNumber, ParkingSpot parkingSpot) {
         this.vehicleRegNumber = vehicleRegNumber;
         this.parkingSpot = parkingSpot;
-    }
+        this.parkingType = ParkingType.DEFAULT;
 
+    }
+    public ParkingType getParkingType() {
+        return parkingType;
+    }
 
     public int getId() {
         return id;

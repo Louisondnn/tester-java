@@ -3,7 +3,25 @@
 <span class="nc" id="L3">public class Fare {</span>
     public static final double BIKE_RATE_PER_HOUR = 1.0;
     public static final double CAR_RATE_PER_HOUR = 1.5;
-    public static final long CAR_RATE = 0;
-    public static final long BIKE_RATE = 0;
+    // public static final long CAR_RATE = 0;
+    // public static final long BIKE_RATE = 0;
+    public static double calculateFare(ParkingType parkingType, long totalMinutes) {
+<span class="nc" id="L9">        double ratePerHour = 0;</span>
+
+<span class="nc bnc" id="L11" title="All 3 branches missed.">        switch (parkingType) {</span>
+            case CAR:
+<span class="nc" id="L13">                ratePerHour = CAR_RATE_PER_HOUR;</span>
+<span class="nc" id="L14">                break;</span>
+            case BIKE:
+<span class="nc" id="L16">                ratePerHour = BIKE_RATE_PER_HOUR;</span>
+<span class="nc" id="L17">                break;</span>
+            // Add more cases for different parking types if needed
+            default:
+<span class="nc" id="L20">                throw new IllegalArgumentException(&quot;Unknown parking type: &quot; + parkingType);</span>
+        }
+<span class="nc" id="L22">        double fare = Math.ceil(totalMinutes / 60.0) * ratePerHour; </span>
+<span class="nc" id="L23">        return fare;</span>
+    }
+
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

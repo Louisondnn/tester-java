@@ -20,7 +20,7 @@ import java.time.LocalDateTime;
         // System.out.println("duration" + duration * (1000 * 60 * 60));
 
         public class FareCalculatorService {
-
+        
             public double calculateFare(Ticket ticket) {
                 if (ticket == null || ticket.getInTime() == null || ticket.getOutTime() == null) {
                     throw new IllegalArgumentException("Ticket or its in/out time cannot be null");
@@ -29,78 +29,31 @@ import java.time.LocalDateTime;
                     throw new IllegalArgumentException("In time cannot be greater than out time");
                 }
         
-                // Calcul de la durée de stationnement
+                // Calculate the duration of parking
                 Duration duration = Duration.between(ticket.getInTime(), ticket.getOutTime());
                 long totalMinutes = duration.toMinutes();
-                
+        
+                // Initialize fare
+                double fare= 0;
                 System.out.println("Total minutes: " + totalMinutes);
-        
-                // Initialisation des frais
-                double fare = 0;
-        
-                // Règles de tarification
-                if (totalMinutes < 30) { // Moins de 30 minutes
-                    fare = 0;
-                } else if (ticket.getParkingSpot().getParkingType() == ParkingType.CAR) {
-                    // Calcul des frais pour les voitures
-                    fare = (totalMinutes / 60) * Fare.CAR_RATE; // Frais par heure
-                    if (totalMinutes % 60 > 0) { // Ajout des frais pour les minutes restantes
-                        fare += (Fare.CAR_RATE / 60.0) * (totalMinutes % 60);
+                if (totalMinutes >= 30) {
+                    double ratePerHour = 0;
+            
+                    switch (ticket.getParkingSpot().getParkingType()) {
+                        case CAR:
+                            ratePerHour = Fare.CAR_RATE_PER_HOUR;
+                            break;
+                        case BIKE:
+                            ratePerHour = Fare.BIKE_RATE_PER_HOUR;
+                            break;
+                        default:
+                            throw new IllegalArgumentException("Unknown parking type: " + ticket.getParkingSpot().getParkingType());
                     }
-                } else if (ticket.getParkingSpot().getParkingType() == ParkingType.BIKE) {
-                    // Calcul des frais pour les motos
-                    fare = (totalMinutes / 60) * Fare.BIKE_RATE; // Frais par heure
-                    if (totalMinutes % 60 > 0) { // Ajout des frais pour les minutes restantes
-                        fare += (Fare.BIKE_RATE / 60.0) * (totalMinutes % 60);
-                    }
+                                fare = (totalMinutes / 60) * ratePerHour; // Charge per hour
+                    fare += (ratePerHour / 60.0) * (totalMinutes % 60); // Charge for remaining minutes
                 }
-        
-                ticket.setPrice(fare);
-                System.out.println("Fare: " + fare);
+            
                 return fare;
-            }
-
+            }            
         }
-    
-    
-
-    // public double calculateFare(Ticket ticket) {
-       
-    //     if (ticket == null || ticket.getInTime() == null || ticket.getOutTime() == null) {
-    //         throw new IllegalArgumentException("Ticket or its in/out time cannot be null");
-    //     }
-    //     if (ticket.getInTime().isAfter(ticket.getOutTime())) {
-    //         throw new IllegalArgumentException("In time cannot be greater than out time");
-    //     }
-    //     Duration duration = Duration.between(ticket.getInTime(), ticket.getOutTime());
-    //     long totalMinutes = duration.toMinutes();
-    //     long totalHours = duration.toHours();
-    //     System.out.println("Total hours: " + totalHours);
-    //     System.out.println("Total minutes: " + totalMinutes);
-    //     System.out.println("Seconds: " + duration.getSeconds());
-    
-    //     double fare = 0;
-    //     System.out.println("Parking Type: " + ticket.getParkingSpot().getParkingType());
-    
-    // if (duration.toMinutes() < 30 ) { // 30 minutes in milliseconds
-    //     fare = 0;
-    // } else if (ticket.getParkingSpot().getParkingType() == ParkingType.CAR) {
-    //     fare = duration.toHours() * Fare.CAR_RATE;
-    //     System.out.println("fare car" + Fare.CAR_RATE);
         
-    // } else if (ticket.getParkingSpot().getParkingType() == ParkingType.BIKE) {
-    //     fare = duration.toHours() * Fare.BIKE_RATE;
-    // }
-    // ticket.setPrice(fare);
-    // System.out.println("Fare: " + fare);
-    // return fare;
-
-    // }
-    // }
-
-
-
-
-     
-
-     

@@ -19,6 +19,8 @@ class ParkingSpotTest {
         assertEquals(1, parkingSpot.getId());
         assertEquals(ParkingType.CAR, parkingSpot.getParkingType());
         assertFalse(parkingSpot.isAvailable());
+        ParkingSpot spot = new ParkingSpot(1, ParkingType.DEFAULT);
+        assertFalse(spot.isOccupied()); 
     }
 
     @Test

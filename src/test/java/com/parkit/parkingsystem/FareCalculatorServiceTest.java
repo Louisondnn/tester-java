@@ -25,8 +25,8 @@ class FareCalculatorServiceTest {
         ticket.setParkingSpot(spot);
         // ticket.setInTime(new Date(System.currentTimeMillis()));
         // ticket.setOutTime(new Date(System.currentTimeMillis() + 15 * 60 * 1000)); // 15 minutes later
-LocalDateTime inTime = LocalDateTime.now(); 
-    ticket.setInTime(inTime); // Use LocalDateTime
+        LocalDateTime inTime = LocalDateTime.now(); 
+        ticket.setInTime(inTime); // Use LocalDateTime
     
     // Set outTime to 15 minutes later
     LocalDateTime outTime = inTime.plus(15, ChronoUnit.MINUTES); // Add 15 minutes
@@ -57,5 +57,51 @@ LocalDateTime inTime = LocalDateTime.now();
         double expectedFare = 2 * Fare.CAR_RATE_PER_HOUR; // Assuming CAR_RATE_PER_HOUR is defined
         assertEquals(expectedFare, fare, 3);
     }
+    @Test
+    void testCalculateFare_NullTicket() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            fareCalculatorService.calculateFare(null);
+        });
+    }
+    @Test
+    void testCalculateFare_NullInTime() {
+        Ticket ticket = new Ticket("ABC123", new ParkingSpot(1, ParkingType.CAR));
+        ticket.setInTime(null);
+        ticket.setOutTime(LocalDateTime.now());
+        assertThrows(IllegalArgumentException.class, () -> {
+            fareCalculatorService.calculateFare(ticket);
+        });
+     }    
+    @Test
+    void testCalculateFare_NullOutTime() {
+        Ticket ticket = new Ticket("ABC123", new ParkingSpot(1, ParkingType.CAR));
+        ticket.setInTime(LocalDateTime.now());
+        ticket.setOutTime(null);
+        assertThrows(IllegalArgumentException.class, () -> {
+            fareCalculatorService.calculateFare(ticket);
+            });
+        }
+    @Test
+    void testCalculateFare_InTimeAfterOutTime() {
+        Ticket ticket = new Ticket("ABC123", new ParkingSpot(1, ParkingType.CAR));
+         ticket.setInTime(LocalDateTime.now());
+        ticket.setOutTime(LocalDateTime.now().minusMinutes(30));
+        assertThrows(IllegalArgumentException.class, () -> {
+            fareCalculatorService.calculateFare(ticket);
+            });
+        }
+        @Test
+        void testCalculateFare_LessThan30Minutes() {
+            Ticket ticket = new Ticket("TEST123", new ParkingSpot(1, ParkingType.CAR));
+            ticket.setInTime(LocalDateTime.now().minusMinutes(20));
+            ticket.setOutTime(LocalDateTime.now());
+            
+            double fare = fareCalculatorService.calculateFare(ticket);
+            assertEquals(0, fare);
+        }
+      
 
 }
+
+
+

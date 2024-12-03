@@ -6,12 +6,23 @@ public class ParkingSpot {
     private int number;
     private ParkingType parkingType;
     private boolean isAvailable;
+    private boolean occupied;
+
 
     public ParkingSpot(int number, ParkingType parkingType) {
         this.number = number;
         this.parkingType = parkingType;
-        this.isAvailable = isAvailable;
+        this.occupied = false; // Newly initialized spots should not be occupied
     }
+    public boolean isOccupied() {
+        return occupied;
+    }
+    // public boolean isAvailable() {
+    //     return isAvailable;
+    // }
+    // public void setAvailable(boolean isAvailable) {
+    //     this.isAvailable = isAvailable;
+    // }
 
     public int getId() {
         return number;

@@ -11,87 +11,124 @@ import org.apache.logging.log4j.Logger;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.time.temporal.ChronoUnit;
 
-<span class="fc" id="L16">public class TicketDAO {</span>
+<span class="fc" id="L18">public class TicketDAO {</span>
 
-<span class="fc" id="L18">    private static final Logger logger = LogManager.getLogger(&quot;TicketDAO&quot;);</span>
+<span class="fc" id="L20">    private static final Logger logger = LogManager.getLogger(&quot;TicketDAO&quot;);</span>
 
-<span class="fc" id="L20">    public DataBaseConfig dataBaseConfig = new DataBaseConfig();</span>
+<span class="fc" id="L22">    public DataBaseConfig dataBaseConfig = new DataBaseConfig();</span>
 
     @SuppressWarnings(&quot;finally&quot;)
     public boolean saveTicket(Ticket ticket){
-<span class="fc" id="L24">        Connection con = null;</span>
+<span class="fc" id="L26">        Connection con = null;</span>
         try {
-<span class="fc" id="L26">            con = dataBaseConfig.getConnection();</span>
-<span class="fc" id="L27">            PreparedStatement ps = con.prepareStatement(DBConstants.SAVE_TICKET);</span>
+<span class="fc" id="L28">            con = dataBaseConfig.getConnection();</span>
+<span class="fc" id="L29">            PreparedStatement ps = con.prepareStatement(DBConstants.SAVE_TICKET);</span>
             //ID, PARKING_NUMBER, VEHICLE_REG_NUMBER, PRICE, IN_TIME, OUT_TIME)
             //ps.setInt(1,ticket.getId());
-<span class="fc" id="L30">            ps.setInt(1,ticket.getParkingSpot().getId());</span>
-<span class="fc" id="L31">            ps.setString(2, ticket.getVehicleRegNumber());</span>
-<span class="fc" id="L32">            ps.setDouble(3, ticket.getPrice());</span>
-<span class="fc" id="L33">            ps.setTimestamp(4, new Timestamp(ticket.getInTime().getTime()));</span>
-<span class="pc bpc" id="L34" title="1 of 2 branches missed.">            ps.setTimestamp(5, (ticket.getOutTime() == null)?null: (new Timestamp(ticket.getOutTime().getTime())) );</span>
-<span class="fc" id="L35">            return ps.execute();</span>
-<span class="nc" id="L36">        }catch (Exception ex){</span>
-<span class="nc" id="L37">            logger.error(&quot;Error fetching next available slot&quot;,ex);</span>
-        }finally {
-<span class="pc" id="L39">            dataBaseConfig.closeConnection(con);</span>
-<span class="pc" id="L40">            return false;</span>
+<span class="fc" id="L32">            System.out.println(&quot;Saving ticket with inTime: &quot; + ticket.getInTime() + &quot; and outTime: &quot; + ticket.getOutTime());</span>
+<span class="fc" id="L33">            System.out.println(&quot;Parking Spot ID: &quot; + ticket.getParkingSpot().getId());</span>
+<span class="fc" id="L34">            System.out.println(&quot;Vehicle Registration Number: &quot; + ticket.getVehicleRegNumber());</span>
+<span class="fc" id="L35">            System.out.println(&quot;Price: &quot; + ticket.getPrice());</span>
+    
+<span class="fc" id="L37">            ps.setInt(1,ticket.getParkingSpot().getId());</span>
+<span class="fc" id="L38">            ps.setString(2, ticket.getVehicleRegNumber());</span>
+<span class="fc" id="L39">            ps.setDouble(3, ticket.getPrice());</span>
+           // Utilisez setTimestamp à la place de setInTime
+<span class="fc" id="L41">           ps.setTimestamp(4, Timestamp.valueOf(ticket.getInTime())); // Assurez-vous que getInTime() renvoie un LocalDateTime valide</span>
+<span class="fc" id="L42">           ps.setTimestamp(5, null); // ou une autre valeur si vous avez une date de sortie</span>
+<span class="fc" id="L43">           int affectedRows = ps.executeUpdate();</span>
+<span class="fc" id="L44">           return affectedRows &gt; 0; // Retourne true si l'insertion a réussi</span>
+
+            // return ps.execute();
+<span class="nc" id="L47">        }catch (Exception ex){</span>
+<span class="nc" id="L48">            logger.error(&quot;Error fetching next available slot&quot;,ex);</span>
+<span class="nc" id="L49">        }finally {</span>
+<span class="fc" id="L50">            dataBaseConfig.closeConnection(con);</span>
+<span class="fc" id="L51">            return false;</span>
         }
     }
 
     @SuppressWarnings(&quot;finally&quot;)
     public Ticket getTicket(String vehicleRegNumber) {
-<span class="fc" id="L46">        Connection con = null;</span>
-<span class="fc" id="L47">        Ticket ticket = null;</span>
+<span class="fc" id="L57">        Connection con = null;</span>
+<span class="fc" id="L58">        Ticket ticket = null;</span>
         try {
-<span class="fc" id="L49">            con = dataBaseConfig.getConnection();</span>
-<span class="fc" id="L50">            PreparedStatement ps = con.prepareStatement(DBConstants.GET_TICKET);</span>
+<span class="fc" id="L60">            con = dataBaseConfig.getConnection();</span>
+<span class="fc" id="L61">            PreparedStatement ps = con.prepareStatement(DBConstants.GET_TICKET);</span>
             //ID, PARKING_NUMBER, VEHICLE_REG_NUMBER, PRICE, IN_TIME, OUT_TIME)
-<span class="fc" id="L52">            ps.setString(1,vehicleRegNumber);</span>
-<span class="fc" id="L53">            ResultSet rs = ps.executeQuery();</span>
-<span class="pc bpc" id="L54" title="1 of 2 branches missed.">            if(rs.next()){</span>
-<span class="fc" id="L55">                ticket = new Ticket(vehicleRegNumber, null);</span>
-<span class="fc" id="L56">                ParkingSpot parkingSpot = new ParkingSpot(rs.getInt(1), ParkingType.valueOf(rs.getString(6)));</span>
-<span class="fc" id="L57">                ticket.setParkingSpot(parkingSpot);</span>
-<span class="fc" id="L58">                ticket.setId(rs.getInt(2));</span>
-<span class="fc" id="L59">                ticket.setVehicleRegNumber(vehicleRegNumber);</span>
-<span class="fc" id="L60">                ticket.setPrice(rs.getDouble(3));</span>
-<span class="fc" id="L61">                ticket.setInTime(rs.getTimestamp(4));</span>
-<span class="fc" id="L62">                ticket.setOutTime(rs.getTimestamp(5));</span>
+<span class="fc" id="L63">            ps.setString(1,vehicleRegNumber);</span>
+<span class="fc" id="L64">            ResultSet rs = ps.executeQuery();</span>
+<span class="pc bpc" id="L65" title="1 of 2 branches missed.">            if(rs.next()){</span>
+<span class="fc" id="L66">                ticket = new Ticket(vehicleRegNumber, null);</span>
+<span class="fc" id="L67">                ParkingSpot parkingSpot = new ParkingSpot(rs.getInt(1), ParkingType.valueOf(rs.getString(6)));</span>
+<span class="fc" id="L68">                ticket.setParkingSpot(parkingSpot);</span>
+<span class="fc" id="L69">                ticket.setId(rs.getInt(2));</span>
+<span class="fc" id="L70">                ticket.setVehicleRegNumber(vehicleRegNumber);</span>
+<span class="fc" id="L71">                ticket.setPrice(rs.getDouble(3));</span>
+<span class="fc" id="L72">                ticket.setInTime(rs.getTimestamp(4).toLocalDateTime()); // Conversion de Timestamp à LocalDateTime</span>
+<span class="fc bfc" id="L73" title="All 2 branches covered.">                ticket.setOutTime(rs.getTimestamp(5) != null ? rs.getTimestamp(5).toLocalDateTime() : null); // Gérer le cas où outTime est null</span>
             }
-<span class="fc" id="L64">            dataBaseConfig.closeResultSet(rs);</span>
-<span class="fc" id="L65">            dataBaseConfig.closePreparedStatement(ps);</span>
-<span class="nc" id="L66">        }catch (Exception ex){</span>
-<span class="nc" id="L67">            logger.error(&quot;Error fetching next available slot&quot;,ex);</span>
-        }finally {
-<span class="pc" id="L69">            dataBaseConfig.closeConnection(con);</span>
-<span class="pc" id="L70">            return ticket;</span>
+<span class="fc" id="L75">            dataBaseConfig.closeResultSet(rs);</span>
+<span class="fc" id="L76">            dataBaseConfig.closePreparedStatement(ps);</span>
+<span class="pc" id="L77">        }catch (Exception ex){</span>
+<span class="nc" id="L78">            logger.error(&quot;Error fetching next available slot&quot;,ex);</span>
+<span class="nc" id="L79">        }finally {</span>
+<span class="fc" id="L80">            dataBaseConfig.closeConnection(con);</span>
+<span class="fc" id="L81">            return ticket;</span>
         }
     }
 
     public boolean updateTicket(Ticket ticket) {
-<span class="fc" id="L75">        Connection con = null;</span>
+<span class="fc" id="L86">        Connection con = null;</span>
+<span class="fc" id="L87">        PreparedStatement ps = null;</span>
+<span class="fc" id="L88">        boolean isUpdated = false; // Variable pour suivre l'état de la mise à jour</span>
+    
         try {
-<span class="fc" id="L77">            con = dataBaseConfig.getConnection();</span>
-<span class="fc" id="L78">            PreparedStatement ps = con.prepareStatement(DBConstants.UPDATE_TICKET);</span>
-<span class="fc" id="L79">            ps.setDouble(1, ticket.getPrice());</span>
-<span class="fc" id="L80">            ps.setTimestamp(2, new Timestamp(ticket.getOutTime().getTime()));</span>
-<span class="fc" id="L81">            ps.setInt(3,ticket.getId());</span>
-<span class="fc" id="L82">            ps.execute();</span>
-<span class="fc" id="L83">            return true;</span>
-<span class="nc" id="L84">        }catch (Exception ex){</span>
-<span class="nc" id="L85">            logger.error(&quot;Error saving ticket info&quot;,ex);</span>
-        }finally {
-<span class="fc" id="L87">            dataBaseConfig.closeConnection(con);</span>
+<span class="fc" id="L91">            con = dataBaseConfig.getConnection();</span>
+<span class="fc" id="L92">            ps = con.prepareStatement(DBConstants.UPDATE_TICKET);</span>
+<span class="fc" id="L93">            ps.setDouble(1, ticket.getPrice());</span>
+    
+            // Vérifiez si outTime est null et convertissez-le en Timestamp
+<span class="pc bpc" id="L96" title="1 of 2 branches missed.">            if (ticket.getOutTime() != null) {</span>
+<span class="fc" id="L97">                ps.setTimestamp(2, Timestamp.valueOf(ticket.getOutTime())); // Conversion de LocalDateTime à Timestamp</span>
+<span class="fc" id="L98">            } else {</span>
+<span class="nc" id="L99">                ps.setNull(2, java.sql.Types.TIMESTAMP); // Si outTime est null, définir le champ comme NULL dans la base de données</span>
+            }
+    
+<span class="fc" id="L102">            ps.setInt(3, ticket.getId());</span>
+    
+            // Utilisez executeUpdate pour les mises à jour
+<span class="fc" id="L105">            int rowsAffected = ps.executeUpdate();</span>
+<span class="pc bpc" id="L106" title="1 of 2 branches missed.">            isUpdated = (rowsAffected &gt; 0); // Vérifiez si la mise à jour a réussi</span>
+<span class="pc" id="L107">        } catch (Exception ex) {</span>
+<span class="nc" id="L108">            logger.error(&quot;Error updating ticket&quot;, ex);</span>
+        } finally {
+            // Fermez les ressources dans l'ordre inverse de leur ouverture
+<span class="pc bpc" id="L111" title="1 of 2 branches missed.">            if (ps != null) {</span>
+                try {
+<span class="fc" id="L113">                    ps.close();</span>
+<span class="pc" id="L114">                } catch (SQLException e) {</span>
+<span class="nc" id="L115">                    logger.error(&quot;Error closing PreparedStatement&quot;, e);</span>
+                }
+            }
+<span class="pc bpc" id="L118" title="1 of 2 branches missed.">            if (con != null) {</span>
+                try {
+<span class="fc" id="L120">                    con.close();</span>
+<span class="pc" id="L121">                } catch (SQLException e) {</span>
+<span class="nc" id="L122">                    logger.error(&quot;Error closing Connection&quot;, e);</span>
+                }
+            }
         }
-<span class="nc" id="L89">        return false;</span>
+        
+<span class="fc" id="L127">        return isUpdated; // Retournez true si la mise à jour a réussi, sinon false</span>
     }
-
     public void deleteTicket(String string) {
         // TODO Auto-generated method stub
-<span class="nc" id="L94">        throw new UnsupportedOperationException(&quot;Unimplemented method 'deleteTicket'&quot;);</span>
+<span class="nc" id="L131">        throw new UnsupportedOperationException(&quot;Unimplemented method 'deleteTicket'&quot;);</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>
