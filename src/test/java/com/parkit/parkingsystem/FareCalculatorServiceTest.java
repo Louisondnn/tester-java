@@ -20,7 +20,7 @@ class FareCalculatorServiceTest {
     @Test
     void testCalculateFare_CarLessThan30Minutes() {
 
-        Ticket ticket = new Ticket(null, null);
+        Ticket ticket = new Ticket(null, null, 0);
         ParkingSpot spot = new ParkingSpot(0, ParkingType.CAR);
         ticket.setParkingSpot(spot);
         // ticket.setInTime(new Date(System.currentTimeMillis()));
@@ -42,7 +42,7 @@ class FareCalculatorServiceTest {
     @Test
     void testCalculateFare_CarMoreThan30Minutes() {
 
-        Ticket ticket = new Ticket(null, null);
+        Ticket ticket = new Ticket(null, null, 0);
         ParkingSpot spot = new ParkingSpot(0, ParkingType.CAR);
         ticket.setParkingSpot(spot);
         LocalDateTime inTime = LocalDateTime.now(); 
@@ -65,7 +65,7 @@ class FareCalculatorServiceTest {
     }
     @Test
     void testCalculateFare_NullInTime() {
-        Ticket ticket = new Ticket("ABC123", new ParkingSpot(1, ParkingType.CAR));
+        Ticket ticket = new Ticket("ABC123", new ParkingSpot(1, ParkingType.CAR), 0);
         ticket.setInTime(null);
         ticket.setOutTime(LocalDateTime.now());
         assertThrows(IllegalArgumentException.class, () -> {
@@ -74,7 +74,7 @@ class FareCalculatorServiceTest {
      }    
     @Test
     void testCalculateFare_NullOutTime() {
-        Ticket ticket = new Ticket("ABC123", new ParkingSpot(1, ParkingType.CAR));
+        Ticket ticket = new Ticket("ABC123", new ParkingSpot(1, ParkingType.CAR), 0);
         ticket.setInTime(LocalDateTime.now());
         ticket.setOutTime(null);
         assertThrows(IllegalArgumentException.class, () -> {
@@ -83,7 +83,7 @@ class FareCalculatorServiceTest {
         }
     @Test
     void testCalculateFare_InTimeAfterOutTime() {
-        Ticket ticket = new Ticket("ABC123", new ParkingSpot(1, ParkingType.CAR));
+        Ticket ticket = new Ticket("ABC123", new ParkingSpot(1, ParkingType.CAR), 0);
          ticket.setInTime(LocalDateTime.now());
         ticket.setOutTime(LocalDateTime.now().minusMinutes(30));
         assertThrows(IllegalArgumentException.class, () -> {
@@ -92,7 +92,7 @@ class FareCalculatorServiceTest {
         }
         @Test
         void testCalculateFare_LessThan30Minutes() {
-            Ticket ticket = new Ticket("TEST123", new ParkingSpot(1, ParkingType.CAR));
+            Ticket ticket = new Ticket("TEST123", new ParkingSpot(1, ParkingType.CAR), 0);
             ticket.setInTime(LocalDateTime.now().minusMinutes(20));
             ticket.setOutTime(LocalDateTime.now());
             

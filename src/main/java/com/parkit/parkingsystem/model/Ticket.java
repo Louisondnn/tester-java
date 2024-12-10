@@ -17,10 +17,11 @@ public class Ticket {
     private LocalDateTime inTime;
     private LocalDateTime outTime;
 
-    public Ticket(String vehicleRegNumber, ParkingSpot parkingSpot) {
+    public Ticket(String vehicleRegNumber, ParkingSpot parkingSpot, double price) {
         this.vehicleRegNumber = vehicleRegNumber;
         this.parkingSpot = parkingSpot;
         this.parkingType = ParkingType.DEFAULT;
+        this.price = price; 
 
     }
     public ParkingType getParkingType() {

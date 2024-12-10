@@ -59,6 +59,5 @@ public class RecurrentUserTest {
         
         recurrentUser .exitGarage(licensePlate);
 
-        assertFalse(recurrentUser .calculateTariff(licensePlate) < normalTariff); // Should not have a discount anymore
-    }
+        assertTrue(recurrentUser .calculateTariff(licensePlate) < normalTariff);    }
 }

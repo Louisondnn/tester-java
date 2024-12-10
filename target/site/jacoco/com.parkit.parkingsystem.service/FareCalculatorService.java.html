@@ -34,11 +34,15 @@ import java.time.Duration;
                         default:
 <span class="nc" id="L35">                            throw new IllegalArgumentException(&quot;Unknown parking type: &quot; + ticket.getParkingSpot().getParkingType());</span>
                     }
-<span class="fc" id="L37">                                fare = (totalMinutes / 60) * ratePerHour; // Charge per hour</span>
-<span class="fc" id="L38">                    fare += (ratePerHour / 60.0) * (totalMinutes % 60); // Charge for remaining minutes</span>
+<span class="fc" id="L37">                    fare = (totalMinutes / 60) * ratePerHour; </span>
+                    // Charge per hour
+<span class="fc" id="L39">                    System.out.println(&quot;Calculated fare: &quot; + fare);</span>
+<span class="fc" id="L40">                    System.out.println(&quot;Rate per hour: &quot; + ratePerHour);</span>
+
+<span class="fc" id="L42">                    fare += (ratePerHour / 60.0) * (totalMinutes % 60); // Charge for remaining minutes</span>
                 }
             
-<span class="fc" id="L41">                return fare;</span>
+<span class="fc" id="L45">                return fare;</span>
             }            
         }
         

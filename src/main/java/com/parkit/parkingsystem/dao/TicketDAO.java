@@ -63,7 +63,7 @@ public class TicketDAO {
             ps.setString(1,vehicleRegNumber);
             ResultSet rs = ps.executeQuery();
             if(rs.next()){
-                ticket = new Ticket(vehicleRegNumber, null);
+                ticket = new Ticket(vehicleRegNumber, null, 0);
                 ParkingSpot parkingSpot = new ParkingSpot(rs.getInt(1), ParkingType.valueOf(rs.getString(6)));
                 ticket.setParkingSpot(parkingSpot);
                 ticket.setId(rs.getInt(2));

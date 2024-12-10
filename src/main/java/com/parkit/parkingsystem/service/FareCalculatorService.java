@@ -42,7 +42,8 @@ import java.time.Duration;
                     fare += (ratePerHour / 60.0) * (totalMinutes % 60); // Charge for remaining minutes
                 }
             
-                return fare;
+                ticket.setPrice(fare);
+                return fare; 
             }            
         }
         

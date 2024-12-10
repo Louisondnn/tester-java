@@ -2,42 +2,44 @@
 import java.util.HashMap;
 import java.util.Map;
 
-public class RecurrentUser {
-    private Map&lt;String, Boolean&gt; recurrentUsers;
+
+public class RecurrentUser  {
+    private Map&lt;String, Boolean&gt; recurrentUsers; // Indique si l'utilisateur est récurrent
     private double normalTariff;
 
-<span class="fc" id="L9">    public RecurrentUser(double normalTariff) {</span>
-<span class="fc" id="L10">        this.recurrentUsers = new HashMap&lt;&gt;();</span>
-<span class="fc" id="L11">        this.normalTariff = normalTariff;</span>
-<span class="fc" id="L12">    }</span>
+<span class="fc" id="L10">    public RecurrentUser (double normalTariff) {</span>
+<span class="fc" id="L11">        this.recurrentUsers = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L12">        this.normalTariff = normalTariff;</span>
+<span class="fc" id="L13">    }</span>
 
     public void enterGarage(String licensePlate) {
-<span class="fc bfc" id="L15" title="All 2 branches covered.">        if (recurrentUsers.containsKey(licensePlate)) {</span>
-<span class="fc" id="L16">            System.out.println(&quot;Heureux de vous revoir ! En tant qu'utilisateur régulier de notre parking, vous allez obtenir une remise de 5%&quot;);</span>
-<span class="fc" id="L17">            recurrentUsers.put(licensePlate, true);</span>
-        } else {
-<span class="fc" id="L19">            recurrentUsers.put(licensePlate, false);</span>
+<span class="fc bfc" id="L16" title="All 2 branches covered.">        if (recurrentUsers.containsKey(licensePlate)) {</span>
+<span class="fc" id="L17">            System.out.println(&quot;Heureux de vous revoir ! En tant qu'utilisateur régulier de notre parking, vous allez obtenir une remise de 5%&quot;);</span>
+<span class="fc" id="L18">            recurrentUsers.put(licensePlate, true); // Marquer comme récurrent</span>
+<span class="fc" id="L19">        } else {</span>
+<span class="fc" id="L20">            recurrentUsers.put(licensePlate, false); // Premier passage</span>
+<span class="fc" id="L21">            System.out.println(&quot;Bienvenue dans notre garage !&quot;);</span>
         }
-<span class="fc" id="L21">    }</span>
+<span class="fc" id="L23">    }</span>
 
     public double calculateTariff(String licensePlate) {
-<span class="fc bfc" id="L24" title="All 2 branches covered.">        if (recurrentUsers.containsKey(licensePlate)) {</span>
-<span class="fc bfc" id="L25" title="All 2 branches covered.">            if (recurrentUsers.get(licensePlate)) {</span>
-<span class="fc" id="L26">                return normalTariff * 0.95; // 5% remise</span>
-            } else {
-<span class="fc" id="L28">                return normalTariff;</span>
-            }
+<span class="pc bpc" id="L26" title="1 of 4 branches missed.">        if (recurrentUsers.containsKey(licensePlate) &amp;&amp; recurrentUsers.get(licensePlate)) {</span>
+<span class="fc" id="L27">            return normalTariff * 0.95; // 5% remise pour les utilisateurs récurrents</span>
         } else {
-<span class="fc" id="L31">            return normalTariff;</span>
+<span class="fc" id="L29">            return normalTariff; // Pas de remise pour les nouveaux utilisateurs</span>
         }
     }
+
     public void exitGarage(String licensePlate) {
-<span class="pc bpc" id="L35" title="1 of 2 branches missed.">        if (recurrentUsers.get(licensePlate)) {</span>
-<span class="fc" id="L36">            System.out.println(&quot;Merci pour votre visite ! Vous avez obtenu une remise de 5% sur votre tarif.&quot;);</span>
-        } else {
-<span class="nc" id="L38">            System.out.println(&quot;Merci pour votre visite !&quot;);</span>
+<span class="pc bpc" id="L34" title="1 of 2 branches missed.">        if (recurrentUsers.containsKey(licensePlate)) {</span>
+<span class="pc bpc" id="L35" title="1 of 2 branches missed.">            if (recurrentUsers.get(licensePlate)) {</span>
+<span class="fc" id="L36">                System.out.println(&quot;Merci pour votre visite ! Vous avez obtenu une remise de 5% sur votre tarif.&quot;);</span>
+<span class="fc" id="L37">            } else {</span>
+<span class="nc" id="L38">                System.out.println(&quot;Merci pour votre visite !&quot;);</span>
+            }
+<span class="nc" id="L40">        } else {</span>
+<span class="nc" id="L41">            System.out.println(&quot;Merci pour votre visite !&quot;);</span>
         }
-<span class="fc" id="L40">        recurrentUsers.remove(licensePlate);</span>
-<span class="fc" id="L41">    }</span>
+<span class="fc" id="L43">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

@@ -45,7 +45,7 @@ public class ParkingService {
                 Date inTimeAsDate = Date.from(inTime.atZone(ZoneId.systemDefault()).toInstant()); // Convert LocalDateTime to Date
 
                 // Date inTime = new Date();
-                Ticket ticket = new Ticket(vehicleRegNumber, parkingSpot);
+                Ticket ticket = new Ticket(vehicleRegNumber, parkingSpot, 0 );
                 ticket.setParkingSpot(parkingSpot);
                 ticket.setVehicleRegNumber(vehicleRegNumber);
                 ticket.setPrice(0);
