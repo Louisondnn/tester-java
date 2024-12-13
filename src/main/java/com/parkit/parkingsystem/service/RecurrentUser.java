@@ -10,7 +10,7 @@ public class RecurrentUser  {
     public void loadRecurrentUsersFromDataBase(Map<String, Boolean> usersFromDatabase){
         recurrentUsers.putAll(usersFromDatabase);
     }
-    
+
     public RecurrentUser (double normalTariff) {
         this.recurrentUsers = new HashMap<>();
         this.normalTariff = normalTariff;

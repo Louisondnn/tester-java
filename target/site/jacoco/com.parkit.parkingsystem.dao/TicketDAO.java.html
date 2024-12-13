@@ -41,14 +41,14 @@ import java.time.temporal.ChronoUnit;
 <span class="fc" id="L41">           ps.setTimestamp(4, Timestamp.valueOf(ticket.getInTime())); // Assurez-vous que getInTime() renvoie un LocalDateTime valide</span>
 <span class="fc" id="L42">           ps.setTimestamp(5, null); // ou une autre valeur si vous avez une date de sortie</span>
 <span class="fc" id="L43">           int affectedRows = ps.executeUpdate();</span>
-<span class="fc" id="L44">           return affectedRows &gt; 0; // Retourne true si l'insertion a réussi</span>
+<span class="pc bpc" id="L44" title="1 of 2 branches missed.">           return affectedRows &gt; 0; // Retourne true si l'insertion a réussi</span>
 
             // return ps.execute();
 <span class="nc" id="L47">        }catch (Exception ex){</span>
 <span class="nc" id="L48">            logger.error(&quot;Error fetching next available slot&quot;,ex);</span>
-<span class="nc" id="L49">        }finally {</span>
-<span class="fc" id="L50">            dataBaseConfig.closeConnection(con);</span>
-<span class="fc" id="L51">            return false;</span>
+        }finally {
+<span class="pc" id="L50">            dataBaseConfig.closeConnection(con);</span>
+<span class="pc" id="L51">            return false;</span>
         }
     }
 
@@ -63,7 +63,7 @@ import java.time.temporal.ChronoUnit;
 <span class="fc" id="L63">            ps.setString(1,vehicleRegNumber);</span>
 <span class="fc" id="L64">            ResultSet rs = ps.executeQuery();</span>
 <span class="pc bpc" id="L65" title="1 of 2 branches missed.">            if(rs.next()){</span>
-<span class="fc" id="L66">                ticket = new Ticket(vehicleRegNumber, null);</span>
+<span class="fc" id="L66">                ticket = new Ticket(vehicleRegNumber, null, 0);</span>
 <span class="fc" id="L67">                ParkingSpot parkingSpot = new ParkingSpot(rs.getInt(1), ParkingType.valueOf(rs.getString(6)));</span>
 <span class="fc" id="L68">                ticket.setParkingSpot(parkingSpot);</span>
 <span class="fc" id="L69">                ticket.setId(rs.getInt(2));</span>
@@ -74,11 +74,11 @@ import java.time.temporal.ChronoUnit;
             }
 <span class="fc" id="L75">            dataBaseConfig.closeResultSet(rs);</span>
 <span class="fc" id="L76">            dataBaseConfig.closePreparedStatement(ps);</span>
-<span class="pc" id="L77">        }catch (Exception ex){</span>
+<span class="nc" id="L77">        }catch (Exception ex){</span>
 <span class="nc" id="L78">            logger.error(&quot;Error fetching next available slot&quot;,ex);</span>
-<span class="nc" id="L79">        }finally {</span>
-<span class="fc" id="L80">            dataBaseConfig.closeConnection(con);</span>
-<span class="fc" id="L81">            return ticket;</span>
+        }finally {
+<span class="pc" id="L80">            dataBaseConfig.closeConnection(con);</span>
+<span class="pc" id="L81">            return ticket;</span>
         }
     }
 
@@ -95,7 +95,7 @@ import java.time.temporal.ChronoUnit;
             // Vérifiez si outTime est null et convertissez-le en Timestamp
 <span class="pc bpc" id="L96" title="1 of 2 branches missed.">            if (ticket.getOutTime() != null) {</span>
 <span class="fc" id="L97">                ps.setTimestamp(2, Timestamp.valueOf(ticket.getOutTime())); // Conversion de LocalDateTime à Timestamp</span>
-<span class="fc" id="L98">            } else {</span>
+            } else {
 <span class="nc" id="L99">                ps.setNull(2, java.sql.Types.TIMESTAMP); // Si outTime est null, définir le champ comme NULL dans la base de données</span>
             }
     
@@ -104,23 +104,23 @@ import java.time.temporal.ChronoUnit;
             // Utilisez executeUpdate pour les mises à jour
 <span class="fc" id="L105">            int rowsAffected = ps.executeUpdate();</span>
 <span class="pc bpc" id="L106" title="1 of 2 branches missed.">            isUpdated = (rowsAffected &gt; 0); // Vérifiez si la mise à jour a réussi</span>
-<span class="pc" id="L107">        } catch (Exception ex) {</span>
+<span class="nc" id="L107">        } catch (Exception ex) {</span>
 <span class="nc" id="L108">            logger.error(&quot;Error updating ticket&quot;, ex);</span>
         } finally {
             // Fermez les ressources dans l'ordre inverse de leur ouverture
 <span class="pc bpc" id="L111" title="1 of 2 branches missed.">            if (ps != null) {</span>
                 try {
 <span class="fc" id="L113">                    ps.close();</span>
-<span class="pc" id="L114">                } catch (SQLException e) {</span>
+<span class="nc" id="L114">                } catch (SQLException e) {</span>
 <span class="nc" id="L115">                    logger.error(&quot;Error closing PreparedStatement&quot;, e);</span>
-                }
+<span class="fc" id="L116">                }</span>
             }
 <span class="pc bpc" id="L118" title="1 of 2 branches missed.">            if (con != null) {</span>
                 try {
 <span class="fc" id="L120">                    con.close();</span>
-<span class="pc" id="L121">                } catch (SQLException e) {</span>
+<span class="nc" id="L121">                } catch (SQLException e) {</span>
 <span class="nc" id="L122">                    logger.error(&quot;Error closing Connection&quot;, e);</span>
-                }
+<span class="fc" id="L123">                }</span>
             }
         }
         

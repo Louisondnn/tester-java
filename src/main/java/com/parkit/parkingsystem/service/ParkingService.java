@@ -37,14 +37,12 @@ public class ParkingService {
             if(parkingSpot !=null && parkingSpot.getId() > 0){
                 String vehicleRegNumber = getVehichleRegNumber();
                 parkingSpot.setAvailable(false);
-                parkingSpotDAO.updateParking(parkingSpot);//allot this parking space and mark it's availability as false
+                parkingSpotDAO.updateParking(parkingSpot);
                 LocalDateTime inTime = LocalDateTime.now(); // Use LocalDateTime
                 System.out.println("In-time for vehicle " + vehicleRegNumber + " is: " + inTime); // Vérifiez la valeur de inTime
 
                
                 Date inTimeAsDate = Date.from(inTime.atZone(ZoneId.systemDefault()).toInstant()); // Convert LocalDateTime to Date
-
-                // Date inTime = new Date();
                 Ticket ticket = new Ticket(vehicleRegNumber, parkingSpot, 0 );
                 ticket.setParkingSpot(parkingSpot);
                 ticket.setVehicleRegNumber(vehicleRegNumber);
@@ -117,11 +115,10 @@ public class ParkingService {
     
             if (ticket == null) {
                 logger.error("No ticket found for vehicle registration number: " + vehicleRegNumber);
-                return; // Gérer l'erreur de manière appropriée
+                return; // Gérer l'erreur
             }
-    
             LocalDateTime outTime = LocalDateTime.now(); // Utiliser LocalDateTime
-            ticket.setOutTime(outTime); // Assurez-vous que setOutTime accepte LocalDateTime
+            ticket.setOutTime(outTime); 
     
             // Calculer les frais avant de mettre à jour le ticket
             fareCalculatorService.calculateFare(ticket);

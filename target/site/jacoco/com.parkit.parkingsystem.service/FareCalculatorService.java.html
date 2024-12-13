@@ -42,7 +42,8 @@ import java.time.Duration;
 <span class="fc" id="L42">                    fare += (ratePerHour / 60.0) * (totalMinutes % 60); // Charge for remaining minutes</span>
                 }
             
-<span class="fc" id="L45">                return fare;</span>
+<span class="fc" id="L45">                ticket.setPrice(fare);</span>
+<span class="fc" id="L46">                return fare; </span>
             }            
         }
         
