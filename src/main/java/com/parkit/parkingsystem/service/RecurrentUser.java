@@ -6,14 +6,19 @@ import java.util.Map;
 public class RecurrentUser  {
     private Map<String, Boolean> recurrentUsers; // Indique si l'utilisateur est récurrent
     private double normalTariff;
+    private Map<String, Boolean> usersFromDatabase; 
     
-    public void loadRecurrentUsersFromDataBase(Map<String, Boolean> usersFromDatabase){
-        recurrentUsers.putAll(usersFromDatabase);
-    }
 
     public RecurrentUser (double normalTariff) {
         this.recurrentUsers = new HashMap<>();
         this.normalTariff = normalTariff;
+        this.usersFromDatabase = new HashMap<>(); 
+
+    }
+    public void loadRecurrentUsersFromDataBase() {
+        usersFromDatabase.put("ABC123", true); //  récurrent
+        usersFromDatabase.put("XYZ789", false); // New
+        recurrentUsers.putAll(usersFromDatabase);
     }
 
     public void enterGarage(String licensePlate) {
