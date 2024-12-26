@@ -14,8 +14,10 @@ import java.sql.SQLException;
     public static final String UPDATE_TICKET = &quot;update ticket set PRICE=?, OUT_TIME=? where ID=?&quot;;
     public static final String GET_TICKET = &quot;select t.PARKING_NUMBER, t.ID, t.PRICE, t.IN_TIME, t.OUT_TIME, p.TYPE from ticket t,parking p where p.parking_number = t.parking_number and t.VEHICLE_REG_NUMBER=? order by t.IN_TIME  limit 1&quot;;
 
+    public static final String RECCURENT_USER = &quot;select t.ID from ticket&quot;;
+    
     public static Connection getConnection() throws SQLException {
-<span class="nc" id="L18">        return DriverManager.getConnection(SAVE_TICKET, GET_TICKET, GET_NEXT_PARKING_SPOT);</span>
+<span class="nc" id="L20">        return DriverManager.getConnection(SAVE_TICKET, GET_TICKET, GET_NEXT_PARKING_SPOT);</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

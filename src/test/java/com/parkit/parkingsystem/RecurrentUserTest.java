@@ -22,7 +22,7 @@ public class RecurrentUserTest {
     public void enterGarageAsNewUser () {
         String licensePlate = "ABC123";
 
-        recurrentUser .enterGarage(licensePlate);
+        recurrentUser.enterGarage(licensePlate);
 
         assertFalse(recurrentUser .calculateTariff(licensePlate) < normalTariff); 
     }
@@ -31,10 +31,10 @@ public class RecurrentUserTest {
     public void enterGarageAsRecurrentUser () {
         String licensePlate = "XYZ789";
 
-        recurrentUser .enterGarage(licensePlate);
-        recurrentUser .enterGarage(licensePlate);
+        recurrentUser.enterGarage(licensePlate);
+        recurrentUser.enterGarage(licensePlate);
 
-        assertTrue(recurrentUser .calculateTariff(licensePlate) < normalTariff); 
+        assertTrue(recurrentUser.calculateTariff(licensePlate) < normalTariff); 
     }
 
     @Test
@@ -42,8 +42,8 @@ public class RecurrentUserTest {
         String licensePlate = "DEF456";
 
 
-        recurrentUser .enterGarage(licensePlate);
-        recurrentUser .enterGarage(licensePlate);
+        recurrentUser.enterGarage(licensePlate);
+        recurrentUser.enterGarage(licensePlate);
 
         double tariff = recurrentUser .calculateTariff(licensePlate);
 
@@ -59,5 +59,17 @@ public class RecurrentUserTest {
         
         recurrentUser .exitGarage(licensePlate);
 
-        assertTrue(recurrentUser .calculateTariff(licensePlate) < normalTariff);    }
+        assertTrue(recurrentUser .calculateTariff(licensePlate) < normalTariff);    
+    }
+
+    @Test
+    public void exitGarageForUserNotInGarage () {
+        String licensePlate = "JKL012";
+
+        // Attempt to exit without entering the garage
+        recurrentUser .exitGarage(licensePlate);
+
+        // Since the user has not entered the garage, the tariff should not be affected
+        assertEquals(10.0, recurrentUser .calculateTariff(licensePlate), 0.01); // Assuming no tariff is calculated for non-entered users
+    }
 }
